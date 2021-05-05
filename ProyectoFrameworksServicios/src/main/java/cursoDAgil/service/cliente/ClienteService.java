@@ -1,9 +1,12 @@
 package cursoDAgil.service.cliente;
 import java.util.List;
-import cursoDAgil.bd.domain.Cliente;
+import java.util.Map;
 
+import cursoDAgil.bd.domain.Cliente;
 public interface ClienteService {
 	List<Cliente> listarTodosClientes();
-	
-
+	Integer nuevoCliente(Cliente cliente);
+	Cliente obtenerClientePorId(Integer id);
+	Integer eliminarCliente(Map<String, Integer>mapCliente);
+	Integer modificarCliente(String nombre, String apellido, String email, String sexo, int id);
 }
