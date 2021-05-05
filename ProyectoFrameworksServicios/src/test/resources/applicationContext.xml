@@ -19,9 +19,9 @@
  
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3307/equipo4"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/equipo4"/>
 		<property name="username" value="root"/>
-		<property name="password" value="root"/>
+		<property name="password" value=""/>
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
