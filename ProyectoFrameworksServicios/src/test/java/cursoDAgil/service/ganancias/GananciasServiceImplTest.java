@@ -31,20 +31,11 @@ public class GananciasServiceImplTest {
 		try {
 			List<Ganancias> lista = gananciasService.listarTodasGanancias();
 			assertEquals(lista.size(), 2);
-			gananciasService.obtenerTotalGanancias();
 		} catch (Exception e) {
 			System.out.println("error" + e);
 		}
 	}
 	
-	@Ignore
-	public void obtenerTotalGanancias(){
-		try {
-			gananciasService.obtenerTotalGanancias();
-		} catch (Exception e) {
-			System.out.println("error" + e);
-		}
-	}
 	
 	@Test
 	public void obtenerGananciasPorFecha() {
