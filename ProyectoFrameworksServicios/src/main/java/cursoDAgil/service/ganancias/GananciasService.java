@@ -21,6 +21,4 @@ public interface GananciasService {
 
 	Integer modificarGanancia(@Param("totalGanancias") double totalGanancias,
 			@Param("idGanancias") Integer idGanancias);
-
-	void obtenerTotalGanancias();
 }
