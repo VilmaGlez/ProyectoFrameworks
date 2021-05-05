@@ -51,9 +51,5 @@ public class GananciasServiceImpl implements GananciasService, Serializable {
 		return gananciasDao.modificarGanancia(totalGanancias, idGanancias);
 	}
 
-	@Override
-	public void obtenerTotalGanancias() {
-		gananciasDao.obtenerTotalGanancias();
-	}
 
 }
