@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition
+	template="/PROYECTO_pages/PROYECTO_secure/primefaces/template/common/commonLayout.xhtml">
+	<!-- Se define la seccion a sustituir del layout -->
+	<ui:define name="content">
+		<div class="container">
+			<div class="col-md-12">
+				<h:form id="form">
+					<p:growl id="msgs" showDetail="true" />
+					<!-- tiene el prefijo p, esto quiere decir que se está usando primefaces -->
+					<p:dataTable id="tablaMarcas" var="mar"
+						value="#{marcasBean.listaMarcas}" editable="true"
+						paginator="true" rows="10"
+						paginatorTemplate="{RowsPerPageDropdown} 
+					{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink}
+					{LastPageLink}"
+						rowsPerPageTemplate="5,10,15"
+						emptyMessage="No se encontraron datos">
+						<f:facet name="header">Tabla de Marcas</f:facet>
+						<p:ajax event="rowEdit"
+							listener="#{marcasBean.onRowEdit}" update=":form:msgs" />
+						<p:ajax event="rowEditCancel"
+							listener="#{marcasBean.onRowCancel}"
+							update=":form:msgs" />
+
+						<p:columnGroup type="header">
+							<p:row>
+								<p:column rowspan="1" colspan="1" headerText="Id" />
+								<p:column rowspan="1" colspan="2" headerText="Nombre" />
+								<p:column rowspan="1" colspan="1" headerText="Cambios" />
+							</p:row>
+						</p:columnGroup>
+						<p:column headerText="Id" colspan="1" style="text-align: center;">
+							<h:outputText value="#{mar.idMarca}" />
+						</p:column>
+						<p:column headerText="Nombre" colspan="2">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{mar.nombreMarca}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{mar.nombreMarca}" style="width:100%"
+										label="Nombre" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column style="width:32px">
+							<p:rowEditor />
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton value="Nuevo"
+								onclick="PF('dialogMarcas').show();" />
+						</f:facet>
+					</p:dataTable>
+				</h:form>
+
+				<!-- dialogo de registro -->
+				<p:dialog id="dialogMarcas" widgetVar="dialogMarcas" modal="true"
+					resizable="false" header="Nuevo Marca" width="55%">
+					<div class="row">
+						<h:form role="form" id="formRegMarcas">
+							<h:panelGrid columns="3" cellpadding="5">
+								<p:outputLabel value="Nombre: *" />
+								<p:inputText id="firstName" style="width: 325px"
+									value="#{marcasBean.marcas.nombreMarca}"
+									styleClass="form-control" required="true"
+									requiredMessage="Campo requerido"
+									validatorMessage="Ingrese entre 8-80 caracteres">
+									<f:validateLength minimum="2" maximum="80" />
+								</p:inputText>
+								
+							</h:panelGrid>
+							<p:commandButton id="btnRegistro" value="Registrar"
+								actionListener="#{marcasBean.registrar}"
+								update=":form:tablaMarcas, :dialogMarcas, :form:msgs"
+								oncomplete="PF('dialogMarcas').show()" process="@form" />
+						</h:form>
+					</div>
+				</p:dialog>
+			</div>
+		</div>
+		<div class="container">
+			<br />
+			<h:link value="Regresar a index"
+				outcome="/PROYECTO_pages/PROYECTO_secure/primefaces/index"
+				styleClass="btn btn-warning" />
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
