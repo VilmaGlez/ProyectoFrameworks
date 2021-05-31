@@ -36,8 +36,7 @@ public class MarcasBean implements Serializable {
 			
 		}
 		// se invoca el metodo del servicio para obtener los marcas
-		//con su dirección
-	
+
 		setlistaMarcas(marcasService.obtenerMarcas());
 	}
 	////
