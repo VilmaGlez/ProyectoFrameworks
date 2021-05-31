@@ -14,7 +14,7 @@ import javax.inject.Named;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
-import cursoDAgil.bd.domain.Cliente;
+
 import cursoDAgil.bd.domain.Marcas;
 import cursoDAgil.service.marcas.MarcasService;
 
@@ -33,15 +33,15 @@ public class MarcasBean implements Serializable {
 			listaMarcas = new ArrayList<Marcas>();
 		if (marcas == null) {
 			marcas = new Marcas();
-			//marcas.setDireccion(null);
+			
 		}
-		// se invoca el metodo del servicio para obtener los clientes
+		// se invoca el metodo del servicio para obtener los marcas
 		//con su dirección
 	
 		setlistaMarcas(marcasService.obtenerMarcas());
 	}
 	////
-	// metodo que registra nuevo cliente
+	// metodo que registra nuevo marca
 	public void registrar() {
 		// invocar al servicio
 		System.out.println("funcion registrar:"+getMarcas().getIdMarca());
@@ -51,15 +51,13 @@ public class MarcasBean implements Serializable {
 		setMarcas(new Marcas());
 		// se actualiza los valores de la tabla
 		setlistaMarcas(marcasService.obtenerMarcas());
-		// setlistaCliente(clienteService.findAllClientes());
+		
 		getlistaMarcas();
 		FacesContext.getCurrentInstance().addMessage("null", new FacesMessage("Registro exitoso!"));
 	
 	}
 	public void onRowEdit(RowEditEvent event) {
 		Marcas mar = ((Marcas) event.getObject());
-		//cli.setDireccion(cliente.getDireccion());
-		//System.out.println(cli.getNombre()+'!'+cli.getApellido()+'!'+cli.getEmail()+'!'+ cli.getSexo()+'!'+cli.getId());
 		marcasService.modificarMarca(mar.getNombreMarca(), mar.getIdMarca());
 		FacesMessage msg = new FacesMessage("Marca editado", mar.getIdMarca().toString());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -71,7 +69,7 @@ public class MarcasBean implements Serializable {
 	public void onCellEdit(CellEditEvent event) {
 		Object oldValue = event.getOldValue();
 		Object newValue = event.getNewValue();
-		System.out.println("verifica: " + newValue);
+
 		if (newValue != null && !newValue.equals(oldValue)) {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Marca modificado", "Antes: " + oldValue + ", Ahora: " +newValue);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
