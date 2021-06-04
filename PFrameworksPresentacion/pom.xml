@@ -37,7 +37,7 @@
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>${primefaces.version}</version>
+			<version>10.0.0</version>
 		</dependency>
 		<!-- PrimeFaces Extensions -->
 		<dependency>
@@ -45,6 +45,7 @@
 			<artifactId>primefaces-extensions</artifactId>
 			<version>3.0.0</version>
 		</dependency>	
+		
 		
 	</dependencies>
 </project>
