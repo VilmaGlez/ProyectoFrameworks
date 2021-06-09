@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cursoDAgil.bd.mappers.VentasMapper">
+
+  <resultMap id="BaseResultMap" type="cursoDAgil.bd.domain.Ventas">
+    <id column="idVenta" jdbcType="INTEGER" property="idVenta" />
+    <result column="clienteId" jdbcType="INTEGER" property="clienteId" />
+    <result column="totalVenta" jdbcType="DOUBLE" property="totalVenta" />
+    <result column="fecha" jdbcType="DATE" property="fecha" />
+   </resultMap>
+     
+    <resultMap id="VentasClientesResultMap" type="cursoDAgil.bd.domain.Ventas">
+  	<id column="idVenta" jdbcType="INTEGER" property="idVenta" />
+    <result column="clienteId" jdbcType="INTEGER" property="clienteId" />
+    <result column="totalVenta" jdbcType="DOUBLE" property="totalVenta" />
+    <result column="fecha" jdbcType="DATE" property="fecha" />
+   	<result column="id"  jdbcType="INTEGER" property="cliente.id" />
+    <result column="nombreCliente"  jdbcType="VARCHAR"  property="cliente.nombre" />
+    <result column="apellido"  jdbcType="VARCHAR" property="cliente.apellido" />
+    <result column="email"  jdbcType="VARCHAR" property="cliente.email" />
+    <result column="sexo"  jdbcType="VARCHAR"  property="cliente.sexo" />
+    <result column="idDireccion"  jdbcType="INTEGER" property="cliente.idDireccion" /> 
+     <association property="cliente" column="clienteId" resultMap="ResultClienteDireccion"/>
+    </resultMap>
+    
+ <resultMap id="VentasClienteProductoResultMap" type="cursoDAgil.bd.domain.Ventas">
+  	<id column="idVenta" jdbcType="INTEGER" property="idVenta" />
+    <result column="clienteId" jdbcType="INTEGER" property="clienteId" />
+    <result column="totalVenta" jdbcType="DOUBLE" property="totalVenta" />
+    <result column="fecha" jdbcType="DATE" property="fecha" />
+   	<result column="id"  jdbcType="INTEGER" property="cliente.id" />
+    <result column="nombreCliente"  jdbcType="VARCHAR"  property="cliente.nombre" />
+    <result column="apellido"  jdbcType="VARCHAR" property="cliente.apellido" />
+    <result column="email"  jdbcType="VARCHAR" property="cliente.email" />
+    <result column="sexo"  jdbcType="VARCHAR"  property="cliente.sexo" />
+    <result column="idDireccion"  jdbcType="INTEGER" property="cliente.idDireccion" />   
+	 <association property="cliente" column="clienteId" resultMap="ResultClienteDireccion"/>
+	 <association property="detalleventas" column="idProducto" resultMap="DetalleVentasResultMap"/>
+  	<collection property="productos" javaType="ArrayList" column="idProducto" ofType="cursoDAgil.bd.domain.Producto"
+  	resultMap="ProductoResultMap"/>
+ 
+  </resultMap> 
+  <resultMap id="ResultClienteDireccion" type="cursoDAgil.bd.domain.Cliente">
+  	<id column="id" jdbcType="INTEGER" property="id" />
+    <result column="nombreCliente" jdbcType="VARCHAR" property="nombre" />
+    <result column="apellido" jdbcType="VARCHAR" property="apellido" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="sexo" jdbcType="VARCHAR" property="sexo" />
+    <result column="idDireccion" jdbcType="INTEGER" property="idDireccion" />
+    <association property="direccion" column="idDireccion" resultMap="DireccionResultMap"/>
+  
+  </resultMap>
+  
+  
+  <!-- Relacion con detalleVentas -->
+    <resultMap id="DetalleVentasResultMap" type="cursoDAgil.bd.domain.DetalleVentas">
+  	<id column="ventaId" property="ventaId" />
+    <result column="productoId"  property="productoId" />
+    <result column="cantidad"  property="cantidad" />
+    <association property="producto" column="productoId" resultMap="ResultProductoMarca" />
+  </resultMap>
+  
+   <resultMap  id="ResultProductoMarca" type="cursoDAgil.bd.domain.Producto">
+  	<id 	column="idProducto"        property="idProducto" />
+    <result column="nombre" 	jdbcType="VARCHAR" 	property="nombre" />
+    <result column="precio" 	jdbcType="DOUBLE" 	property="precio" />
+    <result column="precioVta" 	jdbcType="DOUBLE" 	property="precioVta" />
+    <result column="cantidad" 	jdbcType="INTEGER" 	property="cantidad" />
+    <result column="marcaId" 	jdbcType="INTEGER" 	property="marcaId" />
+    <association property="marcas" column="marcaId" resultMap="MarcaResultMap"/>
+  </resultMap>
+    
+  <!-- Relacion con Cliente   -->
+   
+  <resultMap id="ClienteResultMap" type="cursoDAgil.bd.domain.Cliente">
+  	<id column="id" property="id" />
+    <result column="nombreCliente"  property="nombre" />
+    <result column="apellido"  property="apellido" />
+    <result column="email"  property="email" />
+    <result column="sexo"  property="sexo" />
+    <result column="idDireccion"  property="idDireccion" />
+  </resultMap>
+  
+  <!-- Relacion con direccion -->
+   <resultMap id="DireccionResultMap" type="cursoDAgil.bd.domain.Direccion">
+  	<id column="idDireccion" property="idDireccion" />
+    <result column="calle"   property="calle" />
+    <result column="numero"  property="numero" />
+    <result column="colonia"  property="colonia" />
+    <result column="ciudad"  property="ciudad" />
+    <result column="estado"  property="estado" />	
+    <result column="pais"  property="pais" />
+    <result column="codigoPostal"  property="codigoPostal" />
+    </resultMap>
+
+           <!-- Relacion con ganancias -->
+<resultMap id="GananciasResultMap" type="cursoDAgil.bd.domain.Ganancias">
+		<id column="idGanancia"  property="idGanancia" />
+		<result column="ventaId" property="ventaId" />
+		<result column="totalGanancias"  property="totalGanancias" />
+		<result column="fecha"  property="fecha" />
+	</resultMap>
+    <!-- Relacion con Producto -->
+    <resultMap id="ProductoResultMap" type="cursoDAgil.bd.domain.Producto">
+  	<id column="idProducto" property="idProducto" />
+    <result column="nombre"  property="nombre" />
+    <result column="precio"  property="precio" />
+    <result column="precioVta"  property="precioVta" />
+    <result column="cantidad"  property="cantidad" />
+    <result column="marcaId"  property="marcaId" />
+  </resultMap>
+  
+  <!-- Relacion con marcas -->
+ 
+  <resultMap id="MarcaResultMap" type="cursoDAgil.bd.domain.Marcas">
+  	<id 	column="idMarca"        property="idMarca" />
+    <result column="nombreMarca" 	property="nombreMarca" />
+  </resultMap>
+  
+  <select id="obtenerVenta" resultMap="VentasClientesResultMap">
+  		select 
+  		v.idVenta,
+  		v.clienteId,
+  		v.totalVenta,
+  		v.fecha,
+  		cli.id,
+  		cli.nombre as nombreCliente,
+  		cli.apellido,
+  		cli.email,
+  		cli.sexo,
+  		cli.idDireccion
+  		from equipo4.ventas v
+  		inner join cliente as cli on v.clienteId= cli.id
+ 
+  </select>
+    
+  <insert id="nuevaVenta"
+  parameterType="cursoDAgil.bd.domain.Ventas"
+  				useGeneratedKeys="true" keyProperty="idVenta">
+  				insert into ventas(clienteId,totalVenta,fecha)
+  				values (#{clienteId}, #{totalVenta}, #{fecha})
+  				
+  </insert>
+  
+    <select id="obtenerVentasConProductosPorId" resultMap="VentasClienteProductoResultMap"
+  parameterType="Integer">
+  	select
+  	v.idVenta,
+  	v.clienteId,
+  	v.totalVenta,
+  	v.fecha,
+  	cli.id,
+  	cli.nombre as nombreCliente,
+  	cli.apellido,
+  	cli.email,
+  	cli.sexo,
+  	cli.idDireccion,
+  	p.idProducto,
+  	p.nombre,
+  	p.precio,
+  	p.precioVta,
+  	p.cantidad,
+  	p.marcaId
+  	from equipo4.ventas v 
+  	inner join cliente as cli on v.clienteId=cli.id
+  	inner join detalleventas as dv on v.idVenta = dv.ventaId
+  	inner join productos as p on dv.productoId = p.idProducto
+  	where v.idVenta = #{idVenta}
+  
+  
+  </select>
+  
+  
+  <select id="obtenerVentaPorId" resultMap="VentasClientesResultMap"
+  		parameterType="Integer">
+  		select 
+  		v.idVenta,
+  		v.clienteId,
+  		v.totalVenta,
+  		v.fecha,
+  		cli.id,
+  		cli.nombre as nombreCliente,
+  		cli.apellido,
+  		cli.email,
+  		cli.sexo,
+  		cli.idDireccion,
+  		d.calle,
+  		d.numero,
+  		d.colonia,
+  		d.ciudad,
+  		d.estado,
+  		d.pais,
+  		d.codigoPostal
+  		from 
+  		equipo4.ventas v
+  		inner join cliente as cli on v.clienteId=cli.id
+  		inner join direccion as d on cli.idDireccion = d.idDireccion
+  		where
+		idVenta = #{idVenta}
+  		
+  		</select>
+  
+</mapper>
