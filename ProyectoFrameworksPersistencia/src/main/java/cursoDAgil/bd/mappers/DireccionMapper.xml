@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cursoDAgil.bd.mappers.DireccionMapper">
+  <resultMap id="BaseResultMap" type="cursoDAgil.bd.domain.Direccion">
+  
+  
+    <id column="idDireccion" jdbcType="INTEGER" property="idDireccion" />
+    <result column="calle" jdbcType="VARCHAR" property="calle" />
+    <result column="numero" jdbcType="INTEGER" property="numero" />
+    <result column="colonia" jdbcType="VARCHAR" property="colonia" />
+    <result column="ciudad" jdbcType="VARCHAR" property="ciudad" />
+    <result column="estado" jdbcType="VARCHAR" property="estado" />
+    <result column="pais" jdbcType="VARCHAR" property="pais" />
+    <result column="codigoPostal" jdbcType="INTEGER" property="codigoPostal" />
+  </resultMap>
+  
+  <select id="obtenerDirecciones" resultMap="BaseResultMap">
+  		select * from direccion
+  </select>
+  <insert id="nuevaDireccionCliente"
+  parameterType="cursoDAgil.bd.domain.Direccion"
+  				useGeneratedKeys="true" keyProperty="idDireccion">
+  				insert into direccion(calle,numero,colonia,ciudad,estado,pais,codigoPostal)
+  				values (#{calle}, #{numero}, #{colonia}, #{ciudad}, #{estado}, #{pais}, #{codigoPostal})
+  				
+  </insert>
+  
+  <select id="obtenerDireccionPorId" resultMap="BaseResultMap"
+  		parameterType="hashMap">
+  		select 
+  		dir.idDireccion,
+  		dir.calle,
+  		dir.numero,
+  		dir.colonia,
+  		dir.ciudad,
+  		dir.estado,
+  		dir.pais,
+  		dir.codigoPostal
+  		from 
+  		equipo4.direccion dir 
+  		where
+		idDireccion = #{idDireccion}
+  		
+  		</select>
+  		
+  		<delete id="eliminarDireccion" parameterType="cursoDAgil.bd.domain.Direccion">
+  		delete from equipo4.direccion  where idDireccion = #{idDireccion}
+  		</delete>
+  		
+  		<update id="modificarDireccion" parameterType = "cursoDAgil.bd.domain.Direccion"
+  			useGeneratedKeys="true" keyProperty="idDireccion">
+  			update direccion set
+  	 		calle = #{0},
+  			numero = #{1},
+  			colonia = #{2},
+  			ciudad = #{3},
+  			estado = #{4},
+  			pais = #{5},
+  			codigoPostal= #{6}
+ 			where idDireccion = #{7}
+  
+  </update>
+</mapper>

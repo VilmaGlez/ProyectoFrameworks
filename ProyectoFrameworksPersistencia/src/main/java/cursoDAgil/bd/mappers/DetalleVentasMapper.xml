@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cursoDAgil.bd.mappers.DetalleVentasMapper">
+  <resultMap id="BaseResultMap" type="cursoDAgil.bd.domain.DetalleVentas">
+    <id column="ventaId" jdbcType="INTEGER" property="ventaId" />
+    <result column="productoId" jdbcType="INTEGER" property="productoId" />
+    <result column="cantidad" jdbcType="INTEGER" property="cantidad" />
+  </resultMap>
+  
+  
+   <resultMap id="ResultDetalleVentasProducto" type="cursoDAgil.bd.domain.DetalleVentas">
+    <id column="ventaId" jdbcType="INTEGER" property="ventaId" />
+    <result column="productoId" jdbcType="INTEGER" property="productoId" />
+    <result column="cantidad" jdbcType="INTEGER" property="cantidad" />
+     <association property="producto" column="productoId" resultMap="ResultProductoMarca"/>
+
+  </resultMap>
+  
+    <resultMap  id="ResultProductoMarca" type="cursoDAgil.bd.domain.Producto">
+  	<id 	column="idProducto"        property="idProducto" />
+    <result column="nombre" 	jdbcType="VARCHAR" 	property="nombre" />
+    <result column="precio" 	jdbcType="DOUBLE" 	property="precio" />
+    <result column="precioVta" 	jdbcType="DOUBLE" 	property="precioVta" />
+    <result column="cantidad" 	jdbcType="INTEGER" 	property="cantidad" />
+    <result column="marcaId" 	jdbcType="INTEGER" 	property="marcaId" />
+    <association property="marcas" column="marcaId" resultMap="MarcaResultMap"/>
+  </resultMap>
+  
+   <!-- Relacion con Producto -->
+    <resultMap id="ProductoResultMap" type="cursoDAgil.bd.domain.Producto">
+  	<id column="idProducto" property="idProducto" />
+    <result column="nombre"  property="nombre" />
+    <result column="precio"  property="precio" />
+    <result column="precioVta"  property="precioVta" />
+    <result column="cantidad"  property="cantidad" />
+    <result column="marcaId"  property="marcaId" />
+  </resultMap>
+  
+  <!-- Relacion con marcas -->
+ 
+  <resultMap id="MarcaResultMap" type="cursoDAgil.bd.domain.Marcas">
+  	<id 	column="idMarca"        property="idMarca" />
+    <result column="nombreMarca" 	property="nombreMarca" />
+  </resultMap>
+  
+  <select id="obtenerDetalleVentas" resultMap="ResultDetalleVentasProducto">
+  		
+  	select
+  	dv.ventaId,
+  	dv.productoId,
+  	dv.cantidad,
+  	p.idProducto,
+  	p.nombre,
+  	p.precio,
+  	p.precioVta,
+  	p.cantidad,
+  	p.marcaId,
+  	m.nombreMarca
+  	from equipo4.detalleventas dv
+  	inner join productos as p on dv.productoId = p.idProducto
+  	inner join marcas as m on p.marcaId = m.idMarca
+  </select>
+  
+ 	<insert id="nuevoDetalleVentas"
+  parameterType="cursoDAgil.bd.domain.DetalleVentas"
+  				useGeneratedKeys="true" keyProperty="ventaId">
+  				insert into detalleventas(ventaId,productoId, cantidad)
+  				values (#{ventaId},#{productoId}, #{cantidad})
+  				
+  </insert>  
+  
+  <select id="obtenerDetalleVentasPorId" resultMap="BaseResultMap"
+  		parameterType="hashMap">
+  		select 
+  		dv.ventaId,
+  		dv.productoId,
+  		dv.cantidad
+  		from 
+  		equipo4.detalleventas dv 
+  		where
+		dv.ventaId = #{ventaId}
+  		
+  		</select>
+  		
+
+  
+</mapper>
