@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition
+	template="/PROYECTO_pages/PROYECTO_secure/primefaces/template/common/commonLayout.xhtml">
+
+	<ui:define name="header">
+		<center>
+			<div class="container">
+				<div class="page-header">
+					<h3>Ganancias</h3>
+				</div>
+			</div>
+		</center>
+	</ui:define>
+	<!-- Se define la seccion a sustituir del layout -->
+	<ui:define name="content">
+		<div class="container">
+			<div class="col-md-12">
+				<h:form id="form">
+					<p:growl id="msgs" showDetail="true" />
+
+
+					<!-- tiene el prefijo p, esto quiere decir que lo estoy usando desde prime -->
+					<p:dataTable id="ganancias" var="gan"
+						value="#{gananciasBean.getListaGanancias()}"
+						style="margin-bottom:20px" paginator="true" rows="10"
+						paginatorTemplate="{RowsPerPageDropdown}
+{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink}
+{LastPageLink}"
+						rowsPerPageTemplate="5,10,15"
+						emptyMessage="No se encontraron datos" widgetVar="buscarGan" filteredValue="#{gananciasBean.buscarGanancias}">
+						
+						<f:facet name="header">
+							<span>Ganancias </span>
+							<p:outputPanel>
+								<h:outputText value="Buscar: " />
+								<p:inputText id="globalFilter"
+									onkeyup="PF('buscarGan').filter()" style="width:150px;"
+									placeholder="Enter Keyword" />
+							</p:outputPanel>
+							<br />
+
+						</f:facet>
+
+						<p:columnGroup type="header">
+							<p:row>
+								<p:column rowspan="1" colspan="1" headerText="IdGanancia" style="text-align: center;" />
+
+								<p:column rowspan="1" colspan="1" headerText="VentaId" style="text-align: center;" />
+
+								<p:column rowspan="1" colspan="1" headerText="Ganancia" style="text-align: center;" />
+
+								<p:column rowspan="1" colspan="1" headerText="Fecha" style="text-align: center;"
+									filterBy="#{gan.fecha}" filterStyle="width:100px; height:30px;"
+									filterMatchMode="contains" />
+
+
+							</p:row>
+						</p:columnGroup>
+
+
+						<p:column headerText="IdGanancia" colspan="1"
+							style="text-align: center;">
+							<h:outputText value="#{gan.idGanancia}" />
+						</p:column>
+
+
+						<p:column headerText="VentaId" colspan="1" style="text-align: center;">
+							<h:outputText value="#{gan.ventaId}" />
+						</p:column>
+
+						<p:column headerText="Ganancia" colspan="1" style="text-align: center;">
+							<h:outputText value="#{gan.totalGanancias}" />
+						</p:column>
+
+						<p:column headerText="Fecha" colspan="1" style="text-align: center;">
+							<h:outputText value="#{gan.fecha}" />
+						</p:column>
+
+						<f:facet name="footer">
+							<p:dataTable id="gananciasBean" var="total"
+								value="#{gananciasBean.getTotal()}">
+								<f:facet name="footer">
+									<span>Ganancia Total: #{gananciasBean.getTotal()} </span>
+								</f:facet>
+
+							</p:dataTable>
+						</f:facet>
+
+					</p:dataTable>
+
+
+
+				</h:form>
+
+
+				<div class="container">
+					<br />
+					<h:link value="Regresar a index"
+						outcome="/PROYECTO_pages/PROYECTO_secure/primefaces/index"
+						styleClass="btn btn-warning" />
+
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
