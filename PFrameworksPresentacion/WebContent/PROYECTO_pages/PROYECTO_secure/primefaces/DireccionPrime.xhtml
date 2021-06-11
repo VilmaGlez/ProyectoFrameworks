@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+<ui:composition
+template="/PROYECTO_pages/PROYECTO_secure/primefaces/template/common/commonLayout.xhtml">
+<!-- Se define la seccion a sustituir del layout -->
+<ui:define name="content">
+<div class="container">
+<div class="col-md-12">
+<h:form id="form">
+<p:growl id="msgs" showDetail="true" />
+<!-- tiene el prefijo p, esto quiere decir que se está usando primefaces -->
+
+<p:dataTable id="tablaDireccion" widgetVar="dtDireccion" var="dir"
+value="#{direccionTBean.listaDireccion}" editable="true"
+
+paginator="true" rows="10"
+
+paginatorTemplate="{RowsPerPageDropdown}
+ {FirstPageLink} {PreviousPageLink}
+  {CurrentPageReport} {NextPageLink} {LastPageLink}"
+
+rowsPerPageTemplate="5,10,15"
+emptyMessage="No se encontraron datos">
+<f:facet name="header">
+Tabla de Direccion
+
+</f:facet>
+<p:ajax event="rowEdit"
+
+listener="#{direccionTBean.onRowEdit}"
+
+update=":form:msgs" />
+<p:ajax event="rowEditCancel"
+
+listener="#{direccionTBean.onRowCancel}" update=":form:msgs"
+/>
+
+	<p:columnGroup type="header">
+							<p:row>
+								<p:column rowspan="1" colspan="1" headerText="Id" />
+								<p:column rowspan="1" colspan="4" headerText=" calle"
+									style="text-align: center;" filterBy="#{dir.calle}"
+									filterStyle="width:90px; height:30px;"
+									filterMatchMode="contains" />
+
+								<p:column rowspan="1" colspan="4" headerText=" numero"
+									style="text-align: center;" filterBy="#{dir.numero}"
+									filterStyle="width:60px; height:30px;"
+									filterMatchMode="contains" />
+								<p:column rowspan="1" colspan="4" headerText=" colonia"
+									style="text-align: center;" filterBy="#{dir.colonia}"
+									filterStyle="width:90px; height:30px;"
+									filterMatchMode="contains" />
+								<p:column rowspan="1" colspan="4" headerText="cuidad"
+									style="text-align: center;" filterBy="#{dir.ciudad}"
+									filterStyle="width:90px; height:30px;"
+									filterMatchMode="contains" />
+								<p:column rowspan="1" colspan="4" headerText="estado"
+									style="text-align: center;" filterBy="#{dir.estado}"
+									filterStyle="width:90px; height:30px;"
+									filterMatchMode="contains" />
+								<p:column rowspan="1" colspan="3" headerText="pais"
+									style="text-align: center;" filterBy="#{dir.pais}"
+									filterStyle="width:70px; height:30px;"
+									filterMatchMode="contains" />
+								<p:column rowspan="1" colspan="4" headerText="codigo postal"
+									style="text-align: center;" filterBy="#{dir.codigoPostal}"
+									filterStyle="width:90px; height:30px;"
+									filterMatchMode="contains" />
+								<p:column rowspan="1" colspan="3" headerText="Cambios" style= "width:80px; height:60px;"/>
+							</p:row>
+						</p:columnGroup>
+
+<p:column headerText="Id " colspan="2" style="text-align: center;">
+<h:outputText value="#{dir.idDireccion}" />
+</p:column>
+
+<p:column headerText="calle" colspan="4"  style="text-align: center;">
+<p:cellEditor>
+<f:facet name="output">
+<h:outputText value="#{dir.calle}" />
+
+</f:facet>
+<f:facet name="input">
+<h:inputText value="#{dir.calle}" style="width:100%"
+
+label="calle" />
+</f:facet>
+</p:cellEditor>
+</p:column>
+
+<p:column headerText="numero" colspan="3">
+<p:cellEditor>
+<f:facet name="output">
+<h:outputText
+
+value="#{dir.numero}" />
+
+</f:facet>
+<f:facet name="input">
+<h:inputText
+
+value="#{dir.numero}" style="width:100%"
+
+label="numero" />
+</f:facet>
+</p:cellEditor>
+</p:column>
+
+<p:column headerText="colonia" colspan="4">
+<p:cellEditor>
+<f:facet name="output">
+<h:outputText
+
+value="#{dir.colonia}" />
+
+</f:facet>
+<f:facet name="input">
+<h:inputText
+
+value="#{dir.colonia}" style="width:100%"
+
+label="colonia" />
+</f:facet>
+</p:cellEditor>
+</p:column>
+
+<p:column headerText="ciudad" colspan="4">
+<p:cellEditor>
+<f:facet name="output">
+<h:outputText
+
+value="#{dir.ciudad}" />
+
+</f:facet>
+<f:facet name="input">
+<h:inputText
+
+value="#{dir.ciudad}" style="width:100%"
+
+label="ciudad" />
+</f:facet>
+</p:cellEditor>
+</p:column>
+
+<p:column headerText="estado" colspan="4">
+<p:cellEditor>
+<f:facet name="output">
+<h:outputText
+
+value="#{dir.estado}" />
+
+</f:facet>
+<f:facet name="input">
+<h:inputText
+
+value="#{dir.estado}" style="width:100%"
+
+label="estado" />
+</f:facet>
+</p:cellEditor>
+</p:column>
+
+<p:column headerText="pais" colspan="4">
+<p:cellEditor>
+<f:facet name="output">
+<h:outputText
+
+value="#{dir.pais}" />
+
+</f:facet>
+<f:facet name="input">
+<h:inputText
+
+value="#{dir.pais}" style="width:100%"
+
+label="pais" />
+</f:facet>
+</p:cellEditor>
+</p:column>
+
+<p:column headerText="codigo postal" colspan="4">
+<p:cellEditor>
+<f:facet name="output">
+<h:outputText
+
+value="#{dir.codigoPostal}" />
+
+</f:facet>
+<f:facet name="input">
+<h:inputText
+
+value="#{dir.codigoPostal}" style="width:100%"
+
+label="codigo postal" />
+</f:facet>
+</p:cellEditor>
+</p:column>
+
+
+<p:column style="width:32px" colspan ="2">
+							<p:rowEditor />
+
+							<!-- Inicia boton borrar direccion -->
+
+							<p:commandButton icon="pi pi-trash" process="@this"
+								oncomplete="PF('deleteProductDialog').show()">
+								<f:setPropertyActionListener value="#{dir}"
+									target="#{direccionTBean.direccion}" />
+							</p:commandButton>
+
+							<!-- Termina boton dialogo borrar direccion -->
+
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton value="Nuevo"
+								onclick="PF('dialogCliente').show();" />
+						</f:facet>
+
+	
+</p:dataTable>
+	</h:form>
+
+	<!-- Inicia borrar direccion -->
+				<h:form>
+				
+				<p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade"
+					width="300" message="Borrar esta direccion?" header="Confirmacion de borrar"
+					severity="warn">
+					<p:commandButton value="si" icon="pi pi-check"
+						actionListener="#{direccionTBean.eliminar}" process="@this"
+						oncomplete="PF('deleteProductDialog').hide()" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-button-secondary" icon="pi pi-times"
+						onclick="PF('deleteProductDialog').hide()" />
+				</p:confirmDialog>
+				</h:form>
+
+<!-- dialogo de registro -->
+				<p:dialog id="dialogCliente" widgetVar="dialogCliente" modal="true"
+					resizable="false" header="Nueva Direccion" width="55%">
+					<div class="row">
+						<h:form role="form" id="formRegDireccion">
+							<h:panelGrid columns="3" cellpadding="5">
+								<p:outputLabel value="calle *" />
+								<p:inputText id="calle" style="width: 325px"
+									value="#{direccionTBean.direccion.calle}"
+									styleClass="form-control" required="true"
+									requiredMessage="Campo requerido"
+									validatorMessage="Ingrese entre 8-80 caracteres">
+									<f:validateLength minimum="2" maximum="80" />
+								</p:inputText>
+								<p:message for="calle" />
+								
+								<p:outputLabel value="numero: *" />
+								<p:inputText id="numero" style="width: 325px"
+									value="#{direccionTBean.direccion.numero}"
+									styleClass="form-control" required="true"
+									requiredMessage="Campo requerido"
+									validatorMessage="Ingrese entre 8-80 caracteres">
+									<f:validateLength minimum="2" maximum="80" />
+								</p:inputText>
+								<p:message for="numero" />
+								
+								<p:outputLabel value="colonia: *" />
+								<p:inputText id="colonia" style="width: 325px"
+									value="#{direccionTBean.direccion.colonia}"
+									styleClass="form-control" required="true"
+									requiredMessage="Campo requerido"
+									validatorMessage="Ingrese entre 8-80 caracteres">
+									<f:validateLength minimum="2" maximum="80" />
+								</p:inputText>
+								<p:message for="colonia" />
+								
+								<p:outputLabel value="ciudad: *" />
+								<p:inputText id="ciudad" style="width: 325px"
+									value="#{direccionTBean.direccion.ciudad}"
+									styleClass="form-control" required="true"
+									requiredMessage="Campo requerido"
+									validatorMessage="Ingrese entre 8-80 caracteres">
+									<f:validateLength minimum="2" maximum="80" />
+								</p:inputText>
+								<p:message for="ciudad" />
+								
+								<p:outputLabel value="estado: *" />
+								<p:inputText id="estado" style="width: 325px"
+									value="#{direccionTBean.direccion.estado}"
+									styleClass="form-control" required="true"
+									requiredMessage="Campo requerido"
+									validatorMessage="Ingrese entre 8-80 caracteres">
+									<f:validateLength minimum="2" maximum="80" />
+								</p:inputText>
+								<p:message for="estado" />
+								
+								<p:outputLabel value="pais: *" />
+								<p:inputText id="pais" style="width: 325px"
+									value="#{direccionTBean.direccion.pais}"
+									styleClass="form-control" required="true"
+									requiredMessage="Campo requerido"
+									validatorMessage="Ingrese entre 8-80 caracteres">
+									<f:validateLength minimum="2" maximum="80" />
+								</p:inputText>
+								<p:message for="pais" />
+								
+								<p:outputLabel value="codigo Postal: *" />
+								<p:inputText id="codigoPostal" style="width: 325px"
+									value="#{direccionTBean.direccion.codigoPostal}"
+									styleClass="form-control" required="true"
+									requiredMessage="Campo requerido"
+									validatorMessage="Ingrese entre 8-80 caracteres">
+									<f:validateLength minimum="2" maximum="80" />
+								</p:inputText>
+								<p:message for="codigoPostal" />
+								
+								</h:panelGrid>
+								<p:commandButton id="btnRegistro" value="Registrar"
+								actionListener="#{direccionTBean.registrar}"
+								update=":form:tablaDireccion, :dialogCliente, :form:msgs"
+								oncomplete="PF('dialogCliente').show()" process="@form" />
+						</h:form>
+					</div>
+				</p:dialog>
+								
+
+</div>
+</div>
+
+<div class="container">
+<br />
+<h:link value="Regresar a index"
+
+outcome="/PROYECTO_pages/PROYECTO_secure/primefaces/index"
+
+styleClass="btn btn-warning" />
+
+</div>
+</ui:define>
+</ui:composition>
+
+</html>
