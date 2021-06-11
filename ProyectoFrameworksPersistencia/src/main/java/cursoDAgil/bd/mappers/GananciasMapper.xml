@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cursoDAgil.bd.mappers.GananciasMapper">
+	<resultMap id="BaseResultMap" type="cursoDAgil.bd.domain.Ganancias">
+		<id column="idGanancias" jdbcType="INTEGER" property="idGanancias" />
+		<result column="ventaId" jdbcType="INTEGER" property="ventaId" />
+		<result column="totalGanancias" jdbcType="DOUBLE" property="totalGanancias" />
+		<result column="fecha" jdbcType="DATE" property="fecha" />
+	</resultMap>
+
+	<select id="listarTodasGanancias" resultMap="BaseResultMap">
+		select * from
+		ganancias
+	</select>
+
+	<select id="obtenerGananciasPorFecha" resultMap="BaseResultMap" >
+		SELECT * FROM ganancias WHERE fecha = #{fecha}
+
+	</select>
+	
+	<select id="obtenerGananciasPorId" resultMap="BaseResultMap"
+		parameterType="hashMap">
+		SELECT
+		gan.idGanancias,
+		gan.ventaId,
+		gan.totalGanancias,
+		gan.fecha
+		FROM
+		equipo4.ganancias gan
+	 WHERE idGanancias = #{idGanancias}
+
+	</select>
+
+
+	<insert id="nuevaGanancia" parameterType="cursoDAgil.bd.domain.Ganancias"
+		useGeneratedKeys="true" keyProperty="idGanancias">
+		INSERT INTO ganancias(ventaId,
+		totalGanancias, fecha)
+		VALUES (#{ventaId}, #{totalGanancias}, #{fecha})
+	</insert>
+	
+	
+
+	<delete id="eliminarGanancia" parameterType="cursoDAgil.bd.domain.Ganancias">
+		DELETE FROM ganancias WHERE idGanancias = #{idGanancias}
+	</delete>
+
+	<update id="modificarGanancia" parameterType="cursoDAgil.bd.domain.Ganancias"
+		useGeneratedKeys="true" keyProperty="idGanancias">
+		update ganancias set
+		totalGanancias = #{totalGanancias}
+		where idGanancias = #{idGanancias}
+	</update>
+
+</mapper>
