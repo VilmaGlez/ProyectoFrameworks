@@ -40,4 +40,11 @@ public class DetalleVentas {
 		setProducto (new Producto());
 	}
 	
+	public boolean equals(Object object){
+		if(!(object instanceof DetalleVentas)){
+			return false;
+		}
+		DetalleVentas  regDetalleVentas = (DetalleVentas)object;
+		return (this.ventaId == regDetalleVentas.ventaId);
+	}
 }
