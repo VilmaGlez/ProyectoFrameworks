@@ -76,11 +76,11 @@ public class ProductoServiceImplTest {
 		}
 	}
 
-	@Ignore
+	@Test
 	public void eliminarProductoPorId() {
 		System.out.println("\n\nTest eliminar producto");
 		Map<String, Integer> mapProducto = new HashMap<>();
-		mapProducto.put("idProducto",8);
+		mapProducto.put("idProducto",12);
 		try {
 			System.out.println("Producto eliminado con exito");
 			productoService.eliminarProducto(mapProducto);
@@ -90,7 +90,7 @@ public class ProductoServiceImplTest {
 
 	}
 	
-	@Test
+	@Ignore
 	public void actualizarProducto() {
 		Producto productos = new Producto();
 		System.out.println("\n\nTest actualizar producto");

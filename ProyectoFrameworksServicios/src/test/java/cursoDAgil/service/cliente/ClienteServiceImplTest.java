@@ -35,7 +35,7 @@ public class ClienteServiceImplTest {
 		}
 	}
 	
-	@Test
+	@Ignore
 	public void nuevoRegistro(){
 		Cliente cliente = new Cliente();
 		
@@ -92,11 +92,18 @@ public class ClienteServiceImplTest {
 		}
 	}
 	
-	@Ignore
+	@Test
 	public void modificar(){
 		System.out.println("\n\nTest modificar");
 		try{
-			clienteService.modificarCliente("Roberto","Martinez","R@gmail.com","M",1);
+			Cliente cli = new Cliente();
+			cli.setId(1);
+			cli.setNombre("Roberto");
+			cli.setApellido("Martinez");
+			cli.setEmail("R@gmail.com");
+			cli.setSexo("M");
+			cli.setIddireccion(7);
+			clienteService.modificarCliente(cli);
 			System.out.println(" ");
 		}catch(Exception e){
 			System.out.println("Error:"+ e);
