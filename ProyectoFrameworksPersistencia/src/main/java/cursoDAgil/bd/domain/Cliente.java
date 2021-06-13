@@ -208,4 +208,12 @@ public class Cliente {
     }
     public Direccion getDireccion(){return direccion;}
     public void setDireccion(Direccion direccion){this.direccion = direccion;}
+    
+    public boolean equals(Object object){
+		if(!(object instanceof Cliente)){
+			return false;
+		}
+		Cliente regCliente = (Cliente) object;
+		return (this.id == regCliente.id);
+	}
 }

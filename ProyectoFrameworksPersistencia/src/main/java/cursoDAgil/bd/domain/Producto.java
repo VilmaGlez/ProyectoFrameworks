@@ -7,7 +7,7 @@ public class Producto {
 	private Double precioVta;
 	private Integer cantidad;
 	private Integer marcaId;
-	private Marcas marcas;
+	private Marcas marca;
 	public Integer getIdProducto() {
 		return idProducto;
 	}
@@ -52,10 +52,18 @@ public class Producto {
 	public Producto(){
 		setMarca(new Marcas());
 	}
-	public void setMarca(Marcas marcas){
-		this.marcas=marcas;
+	public void setMarca(Marcas marca){
+		this.marca = marca;
 	}
 	public Marcas getMarca(){
-		return marcas;
+		return marca;
+	}
+	
+	public boolean equals(Object object){
+		if(!(object instanceof Producto)){
+			return false;
+		}
+		Producto regProducto = (Producto) object;
+		return (this.idProducto == regProducto.idProducto);
 	}
 }

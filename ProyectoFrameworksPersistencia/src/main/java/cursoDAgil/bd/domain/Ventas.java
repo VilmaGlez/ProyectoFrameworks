@@ -68,6 +68,12 @@ public class Ventas {
 		this.productos = productos;
 	}
 	 
-
+	public boolean equals(Object object){
+		if(!(object instanceof Ventas)){
+			return false;
+		}
+		Ventas regVentas = (Ventas) object;
+		return (this.idVenta == regVentas.idVenta);
+	}
 	    
 }
