@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<!-- /******************************* -->
+<!-- /*Equipo 4*/-->
+<!-- /*Gónzalez Ruiz Vilma Denisse*/-->
+<!-- /*Sánchez Morales Fernando*/-->
+<!-- /*28/05/21*/-->
+<!-- /******************************* -->
+<ui:composition
+	template="/PROYECTO_pages/PROYECTO_secure/primefaces/template/common/commonLayout.xhtml">
+	<!-- Se define la seccion a sustituir del layout -->
+	<ui:define name="content">
+		<div class="container">
+			<div class="col-md-12">
+				<h:form id="form">
+					<p:growl id="msgs" showDetail="true" />
+					<!-- tiene el prefijo p, esto quiere decir que se está usando primefaces -->
+					<p:dataTable id="tablaVentas" widgetVar="dtVentas" var="vta"
+						value="#{ventasBean.ventasList}" editable="true" paginator="true"
+						rows="10"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						rowsPerPageTemplate="5,10,15"
+						emptyMessage="No se encontraron datos">
+						<f:facet name="header">Ventas
+						<span class="filter-container ui-input-icon-left"> <i
+								class="pi pi-search"></i> <p:inputText id="globalFilter"
+									onkeyup="PF('dtVentas').filter()" placeholder="Search" />
+							</span>
+						</f:facet>
+						<p:columnGroup type="header">
+							<p:row>
+								<p:column rowspan="1" colspan="1" headerText="Id" />
+								<p:column rowspan="1" colspan="2" headerText="Nombre" />
+								<p:column rowspan="1" colspan="2" headerText="Apellido" />
+								<p:column rowspan="1" colspan="1" headerText="Total" />
+								<p:column rowspan="1" colspan="1" headerText="Detalle Venta" />
+							</p:row>
+						</p:columnGroup>
+						<p:column headerText="Id" colspan="1" style="text-align: center;"
+							filterBy="#{vta.idVenta}">
+							<h:outputText value="#{vta.idVenta}" />
+						</p:column>
+						<p:column headerText="Nombre" colspan="2"
+							filterBy="#{vta.cliente.nombre}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{vta.cliente.nombre}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{vta.cliente.nombre}" style="width:100%"
+										label="Nombre" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Apellido" colspan="2"
+							filterBy="#{vta.cliente.apellido}">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{vta.cliente.apellido}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{vta.cliente.apellido}" style="width:100%"
+										label="Apellido" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Total" colspan="1">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{vta.totalVenta}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:inputText value="#{vta.totalVenta}" style="width:100%"
+										label="Total" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column style="width:3rem;text-align: center">
+							<p:commandButton icon="pi pi-search" process="@this"
+								oncomplete="PF('detalleVentaDialog').show()"
+								update="h2:detalleventas" action="#{ventasBean.obtener}">
+								<f:setPropertyActionListener value="#{vta}"
+									target="#{ventasBean.ventas}" />
+							</p:commandButton>
+						</p:column>
+						<f:facet name="footer">
+							<p:commandButton value="Nuevo"
+								onclick="PF('dialogVenta').show();" update="formRegVentas" />
+						</f:facet>
+					</p:dataTable>
+				</h:form>
+				<!-- Inicia dialog de detalle Venta -->
+				<p:dialog widgetVar="detalleVentaDialog" modal="true"
+					resizable="false" header="Detalle Venta" width="55%">
+					<h:form id="h2">
+						<p:dataTable id="detalleventas" var="prod"
+							value="#{ventasBean.productoList}" style="margin-bottom:20px">
+							<f:facet name="header">
+			Detalle Venta
+					</f:facet>
+							<p:column headerText="IdVenta">
+								<h:outputText value="#{ventasBean.ventaSe.idVenta}" />
+							</p:column>
+							<p:column headerText="IdProducto">
+								<h:outputText value="#{prod.idProducto}" />
+							</p:column>
+							<p:column headerText="Cantidad">
+								<h:outputText value="#{prod.cantidad}" />
+							</p:column>
+						</p:dataTable>
+					</h:form>
+				</p:dialog>
+				<!-- Fin dialog de detalle Venta -->
+				<!-- dialog de registro -->
+				<p:dialog id="dialogVenta" widgetVar="dialogVenta" modal="true"
+					resizable="false" header="Nueva Venta" width="55%">
+					<div class="row">
+						<h:form role="form" id="formRegVentas">
+							<h:panelGrid columns="3" cellpadding="5">
+								<p:outputLabel value="Cliente: *" />
+								<p:column styleClass="ocultar-bordes">
+									<p:selectOneMenu id="selectCliente"
+										value="#{ventasBean.cliente}" var="temp"
+										converter="#{clienteConverter}" effect="fade" filter="true"
+										panelStyle="width:345px" style="width:325px"
+										filterMatchMode="startsWith" required="true"
+										requiredMessage="Debe seleccionar un cliente">
+										<f:selectItem itemLabel="Seleccione un cliente"
+											itemValue="#{null}" process="@this" />
+										<f:selectItems
+											value="#{clienteDireccion2Bean.getlistaCliente()}"
+											var="cliente"
+											itemLabel="#{cliente.nombre} #{cliente.apellido}"
+											itemValue="#{cliente}" />
+										<p:column style="width:10%">
+											<h:outputText value="#{temp.nombre}" />
+										</p:column>
+										<p:column>
+											<h:outputText value="#{temp.apellido}" />
+										</p:column>
+									</p:selectOneMenu>
+								</p:column>
+								<p:message for="selectCliente" />
+								<p:outputLabel value="Producto: *" />
+								<p:column styleClass="ocultar-bordes">
+									<p:selectOneMenu id="selectProducto"
+										value="#{ventasBean.producto}" var="temp"
+										converter="#{productoConverter}" effect="fade" filter="true"
+										panelStyle="width:345px" style="width:325px"
+										filterMatchMode="startsWith" required="true"
+										requiredMessage="Debe seleccionar un producto">
+										<f:selectItem itemLabel="Seleccione un producto"
+											itemValue="#{null}" process="@this" />
+										<f:selectItems value="#{productoBean.getlistaProducto()}"
+											var="producto"
+											itemLabel="#{producto.nombre} #{producto.cantidad}"
+											itemValue="#{producto}" />
+										<p:column style="width:10%">
+											<h:outputText value="#{temp.nombre}" />
+										</p:column>
+										<p:column>
+											<h:outputText value="#{temp.cantidad}" />
+										</p:column>
+									</p:selectOneMenu>
+								</p:column>
+								<p:message for="selectProducto" />
+								<p:outputLabel value="Cantidad: *" />
+								<p:inputText id="cantidad" style="width: 50px"
+									value="#{ventasBean.cant}" styleClass="form-control"
+									required="true" requiredMessage="Campo requerido"
+									validatorMessage="Ingrese cantidad valida">
+									<f:validateLongRange minimum="1" maximum="10000" />
+								</p:inputText>
+								<p:message for="cantidad" />
+							</h:panelGrid>
+						<!-- Boton para agregar al carrito. Cada que sea escuchado se ejecuta el metodo agregarCarrito en el bean y posteriormente se actualiza la tabla-->							
+							<p:commandButton id="btnCarrito" styleClass="rounded-button"
+								value="Agregar al carrito"
+								actionListener="#{ventasBean.agregarCarrito}"
+								update=":dialogVenta,:form:msgs"
+								oncomplete="PF('dialogVenta').show()" process="@form" />
+						<!-- Boton para agregar al carrito. Cada que sea escuchado se ejecuta el metodo registrar en el bean y posteriormente se actualiza la tabla-->	
+							<p:commandButton id="btnRegistro"
+								styleClass="rounded-button ui-button-success" value="Registrar"
+								actionListener="#{ventasBean.registrar}"
+								update=":form:tablaVentas,:dialogVenta,:form:msgs"
+								oncomplete="PF('dialogVenta').show()" process="@form" />
+						<!-- Boton para agregar al carrito. Cada que sea escuchado se ejecuta el metodo cancelar en el bean y posteriormente se actualiza la tabla-->	
+							<p:commandButton id="btnCancelar" value="Cancelar"
+								styleClass="rounded-button ui-button-secondary"
+								actionListener="#{ventasBean.cancelar}"
+								update=":form:tablaVentas,:dialogVenta,:form:msgs"
+								oncomplete="PF('dialogVenta').show()" process="@form" />
+						</h:form>
+					</div>
+					<p:dataTable id="carrito" widgetVar="carrito" var="prod"
+						value="#{ventasBean.productoList}" emptyMessage="Carrito Vacío">
+						<f:facet name="header">
+                Carrito de compras
+            </f:facet>
+						<p:column headerText="Id">
+							<h:outputText value="#{prod.idProducto}" />
+						</p:column>
+						<p:column headerText="Producto">
+							<h:outputText value="#{prod.nombre}" />
+						</p:column>
+						<p:column headerText="Cantidad">
+							<h:outputText value="#{prod.cantidad}" />
+						</p:column>
+					</p:dataTable>
+				</p:dialog>
+			</div>
+		</div>
+		<div class="container">
+			<br />
+			<h:link value="Regresar a index"
+				outcome="/PROYECTO_pages/PROYECTO_secure/primefaces/index"
+				styleClass="btn btn-warning" />
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
+
+
