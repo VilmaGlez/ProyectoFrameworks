@@ -67,7 +67,7 @@
     <result column="precioVta" 	jdbcType="DOUBLE" 	property="precioVta" />
     <result column="cantidad" 	jdbcType="INTEGER" 	property="cantidad" />
     <result column="marcaId" 	jdbcType="INTEGER" 	property="marcaId" />
-    <association property="marcas" column="marcaId" resultMap="MarcaResultMap"/>
+    <association property="marca" column="marcaId" resultMap="MarcaResultMap"/>
   </resultMap>
     
   <!-- Relacion con Cliente   -->
@@ -138,7 +138,7 @@
   parameterType="cursoDAgil.bd.domain.Ventas"
   				useGeneratedKeys="true" keyProperty="idVenta">
   				insert into ventas(clienteId,totalVenta,fecha)
-  				values (#{clienteId}, #{totalVenta}, #{fecha})
+  				values (#{cliente.id}, #{totalVenta}, #{fecha})
   				
   </insert>
   

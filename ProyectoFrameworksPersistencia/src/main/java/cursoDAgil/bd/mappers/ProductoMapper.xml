@@ -18,7 +18,7 @@
     <result column="precioVta" 	jdbcType="DOUBLE" 	property="precioVta" />
     <result column="cantidad" 	jdbcType="INTEGER" 	property="cantidad" />
     <result column="marcaId" 	jdbcType="INTEGER" 	property="marcaId" />
-    <association property="marcas" column="idMarca"
+    <association property="marca" column="idMarca"
     	resultMap="MarcaResultMap"/>
   </resultMap>
   
@@ -48,7 +48,7 @@
   parameterType="cursoDAgil.bd.domain.Producto"
   				useGeneratedKeys="true" keyProperty="idProducto">
   				insert into productos(nombre,precio,precioVta,cantidad,marcaId)
-  				values (#{nombre}, #{precio}, #{precioVta}, #{cantidad}, #{marcaId})
+  				values (#{nombre}, #{precio}, #{precioVta}, #{cantidad}, #{marca.idMarca})
   				
   </insert>
   	<delete id="eliminarProducto" >
@@ -56,7 +56,7 @@
 	</delete>
 	<update id="actualizarProducto" parameterType="cursoDAgil.bd.domain.Producto"
 	useGeneratedKeys="true" keyProperty="idProducto">
-		UPDATE productos SET nombre = #{nombre}, precio = #{precio}, precioVta = #{precioVta}, cantidad = #{cantidad}
+		UPDATE productos SET nombre = #{nombre}, precio = #{precio}, precioVta = #{precioVta}, cantidad = #{cantidad}, marcaId = #{marca.idMarca}
 		 WHERE idProducto = #{idProducto}; 
 	</update>
   <select id="obtenerProductoPorId" resultMap="ResultProductoMarca"

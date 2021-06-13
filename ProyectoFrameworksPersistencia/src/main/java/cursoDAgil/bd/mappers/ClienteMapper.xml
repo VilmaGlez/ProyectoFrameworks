@@ -64,7 +64,7 @@
   				insert into cliente(nombre,apellido,email,sexo,idDireccion)
   				values (#{nombre}, #{apellido}, #{email}, #{sexo}, #{direccion.idDireccion})
   				
-  </insert>
+  </insert> 
   
   <select id="obtenerClientePorId" resultMap="ResultClienteDireccion"
   		parameterType="Integer">
@@ -97,12 +97,13 @@
   	<update id="modificarCliente" parameterType="cursoDAgil.bd.domain.Cliente"
   	useGeneratedKeys="true" keyProperty="id">
   	update cliente set 
-  	nombre = #{0},
-  	apellido = #{1},
-  	email = #{2},
-  	sexo = #{3},
-  	idDireccion = #{4}
-  	where id = #{5};
+  	nombre = #{nombre},
+  	apellido = #{apellido},
+  	email = #{email},
+  	sexo = #{sexo},
+  	idDireccion = #{direccion.idDireccion}
+  	where id = #{id};
+
   	</update>
   
 </mapper>
