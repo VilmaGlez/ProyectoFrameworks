@@ -1,3 +1,9 @@
+<!--/******************************/
+/* Equipo 4 */
+/* Gonzalez Ruiz Vilma Denisse */
+/* Sanchez Morales Fernando */
+/* 28/05/21 */
+/*****************************/-->
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -15,42 +21,52 @@
 				<h:form id="form">
 					<p:growl id="msgs" showDetail="true" />
 					<!-- tiene el prefijo p, esto quiere decir que se está usando primefaces -->
-					<p:dataTable id="tablaProducto" var="cli"
-						value="#{productoMarcas2Bean.listaProducto}" editable="true"
+
+					<p:dataTable id="tablaProductos" widgetVar="dtProducts" var="prod"
+						value="#{productoBean.listaProducto}" editable="true"
 						paginator="true" rows="10"
-						paginatorTemplate="{RowsPerPageDropdown} 
-					{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink}
-					{LastPageLink}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 						rowsPerPageTemplate="5,10,15"
 						emptyMessage="No se encontraron datos">
-						<f:facet name="header">Tabla de Productos</f:facet>
+						<f:facet name="header">Productos
+						<span class="filter-container ui-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtProducts').filter()" placeholder="Search"/>
+                    </span></f:facet>
+						
 						<p:ajax event="rowEdit"
-							listener="#{productoMarcas2Bean.onRowEdit}" update=":form:msgs" />
+							listener="#{productoBean.onRowEdit}" update=":form:msgs"/>
 						<p:ajax event="rowEditCancel"
-							listener="#{productoMarcas2Bean.onRowCancel}"
-							update=":form:msgs" />
-
+							listener="#{productoBean.onRowCancel}"
+							update=":form:msgs"/>
 						<p:columnGroup type="header">
 							<p:row>
-								<p:column rowspan="1" colspan="1" headerText="IdProducto" />
+								<p:column rowspan="1" colspan="1" headerText="Id" />
+
 								<p:column rowspan="1" colspan="2" headerText="Nombre" />
+
 								<p:column rowspan="1" colspan="2" headerText="Precio" />
-								<p:column rowspan="1" colspan="2" headerText="PrecioVta" />
+
+								<p:column rowspan="1" colspan="2" headerText="Precio Venta" />
+
 								<p:column rowspan="1" colspan="1" headerText="Cantidad" />
+
 								<p:column rowspan="1" colspan="2" headerText="Marca" />
+
 								<p:column rowspan="1" colspan="1" headerText="Cambios" />
+								
 							</p:row>
 						</p:columnGroup>
-						<p:column headerText="IdProducto" colspan="1" style="text-align: center;">
-							<h:outputText value="#{pro.idProducto}" />
+						<p:column headerText="Id" colspan="1" style="text-align: center;" filterBy="#{prod.idProducto}">
+							<h:outputText value="#{prod.idProducto}" />
 						</p:column>
-						<p:column headerText="Nombre" colspan="2">
+						<p:column headerText="Nombre" colspan="2" filterBy="#{prod.nombre}">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{pro.nombre}" />
+									<h:outputText value="#{prod.nombre}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{pro.nombre}" style="width:100%"
+									<h:inputText value="#{prod.nombre}" style="width:100%"
 										label="Nombre" />
 								</f:facet>
 							</p:cellEditor>
@@ -58,90 +74,88 @@
 						<p:column headerText="Precio" colspan="2">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{pro.precio}" />
+									<h:outputText value="#{prod.precio}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{pro.precio}" style="width:100%"
+									<h:inputText value="#{prod.precio}" style="width:100%"
 										label="Precio" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column headerText="PrecioVta" colspan="2">
+						<p:column headerText="Precio Venta" colspan="2">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{pro.PrecioVta}" />
+									<h:outputText value="#{prod.precioVta}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{pro.precioVta}" style="width:100%"
-										label="PrecioVta" />
+									<h:inputText value="#{prod.precioVta}" style="width:100%"
+										label="Precio Venta" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column headerText="Cantidad" colspan="1">
 							<p:cellEditor>
 								<f:facet name="output">
-									<h:outputText value="#{pro.cantidad}" />
+									<h:outputText value="#{prod.cantidad}" />
 								</f:facet>
 								<f:facet name="input">
-									<h:inputText value="#{pro.cantidad}" style="width:100%"
+									<h:inputText value="#{prod.cantidad}" style="width:100%"
 										label="Cantidad" />
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column headerText="Marca" colspan="2">
+						<p:column headerText="Marca" colspan="2" filterBy="#{prod.marca.nombreMarca}">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText id="marca"
-										value="#{pro.marcas.marca}"
+										value="#{prod.marca.nombreMarca}"
 										style="width:100%" label="Marca" />
 								</f:facet>
 								<f:facet name="input">
 									<p:selectOneMenu id="selectMarca"
-										value="#{clienteDireccion2Bean.producto.marca}" var="temp"
+										value="#{productoBean.producto.marca}" var="temp"
 										converter="#{marcasConverter}" effect="fade" filter="true"
 										panelStyle="width:345px" style="width:325px"
 										filterMatchMode="startsWith" required="true">
-										<f:selectItems value="#{marcasTBean.getListaMarcas()}"
-											var="marcas"
-											itemLabel="#{marcas.marca} "
-											itemValue="#{marcas}" />
+										<f:selectItems value="#{marcasBean.getlistaMarcas()}"
+											var="marca"
+											itemLabel="#{marca.nombreMarca}"
+											itemValue="#{marca}" />
 										<p:column style="width:10%">
-											<h:outputText value="#{temp.marca}" />
+											<h:outputText value="#{temp.nombreMarca}" />
 										</p:column>
 									</p:selectOneMenu>
 								</f:facet>
 							</p:cellEditor>
-						</p:column>
+						</p:column> 
 						<p:column style="width:32px">
 							<p:rowEditor />
-
 							<!-- Inicia boton borrar cliente -->
 
 							<p:commandButton icon="pi pi-trash" process="@this"
 								oncomplete="PF('deleteProductDialog').show()">
-								<f:setPropertyActionListener value="#{pro}"
-									target="#{ProductoMarca2Bean.producto}" />
+								<f:setPropertyActionListener value="#{prod}"
+									target="#{productoBean.producto}" />
 							</p:commandButton>
 
 							<!-- Termina boton dialogo borrar cliente -->
-
 						</p:column>
+									
 						<f:facet name="footer">
 							<p:commandButton value="Nuevo"
-								onclick="PF('dialogMarca').show();" />
+								onclick="PF('dialogProducto').show();" />
 						</f:facet>
-
-						
 					</p:dataTable>
 				</h:form>
+				
 				<!-- Inicia borrar cliente -->
 				<h:form>
 				
 				<p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade"
-					width="300" message="Borrar este producto?" header="Confirmacion de borrar"
+					width="300" message="¿Borrar este producto?" header="Confirmación de borrar"
 					severity="warn">
-					<p:commandButton value="si" icon="pi pi-check"
-						actionListener="#{productoMarca2Bean.eliminar}" process="@this"
+					<p:commandButton value="Sí" icon="pi pi-check"
+						actionListener="#{productoBean.eliminar}" process="@this"
 						oncomplete="PF('deleteProductDialog').hide()" />
 					<p:commandButton value="No" type="button"
 						styleClass="ui-button-secondary" icon="pi pi-times"
@@ -150,93 +164,93 @@
 				</h:form>
 				
 				<!-- Termina dialogo borrar cliente -->
-				<!-- dialogo de registro -->
-				<p:dialog id="dialogMarca" widgetVar="dialogMarca" modal="true"
-					resizable="false" header="Nueva Marca" width="55%">
+				
+				<!-- dialog de registro -->
+				<p:dialog id="dialogProducto" widgetVar="dialogProducto" modal="true"
+					resizable="false" header="Nuevo Producto" width="55%">
 					<div class="row">
-						<h:form role="form" id="formRegMarca">
+						<h:form role="form" id="formRegProductos">
 							<h:panelGrid columns="3" cellpadding="5">
+
 								<p:outputLabel value="Nombre: *" />
-								<p:inputText id="nombre" style="width: 325px"
-									value="#{productonMarca2Bean.cliente.nombre}"
+
+								<p:inputText id="name" style="width: 325px"
+									value="#{productoBean.producto.nombre}"
 									styleClass="form-control" required="true"
-									requiredMessage="Campo requerido"
+									requiredMessage="Campo Requerido"
 									validatorMessage="Ingrese entre 8-80 caracteres">
 									<f:validateLength minimum="2" maximum="80" />
 								</p:inputText>
-								<p:message for="nombre" />
-								
+								<p:message for="name" />
 								<p:outputLabel value="Precio: *" />
 								<p:inputText id="precio" style="width: 325px"
-									value="#{productoMarcas2Bean.producto.precio}"
+									value="#{productoBean.producto.precio}"
 									styleClass="form-control" required="true"
 									requiredMessage="Campo requerido"
-									validatorMessage="Ingrese entre 1-80 caracteres">
-									<f:validateLength minimum="2" maximum="80" />
+									validatorMessage="Ingrese precio valido">
+									<f:validateDoubleRange minimum="0.0" maximum="10000.0" />
 								</p:inputText>
 								<p:message for="precio" />
-	}
-								<p:outputLabel value="PrecioVta: *" />
+								<p:outputLabel value="Precio Venta: *" />
 								<p:inputText id="precioVta" style="width: 250px"
-									value="#{productoMarca2Bean.producto.precioVta}"
+									value="#{productoBean.producto.precioVta}"
 									styleClass="form-control" required="true"
 									requiredMessage="Campo requerido"
-									validatorMessage="Ingrese un email valido">
-									<f:validateRegex
-										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									validatorMessage="Ingrese precio valido">
+									<f:validateDoubleRange minimum="0.0" maximum="10000.0" />
 								</p:inputText>
 								<p:message for="precioVta" />
-								
 								<p:outputLabel value="Cantidad: *" />
 								<p:inputText id="cantidad" style="width: 50px"
-									value="#{productoMarca2Bean.producto.cantidad}"
+									value="#{productoBean.producto.cantidad}"
 									styleClass="form-control" required="true"
 									requiredMessage="Campo requerido"
-									validatorMessage="Ingrese el sexo H/M:">
-									<f:validateLength minimum="1" maximum="5" />
+									validatorMessage="Ingrese cantidad valida">
+									<f:validateLongRange minimum="1" maximum="10000" />
 								</p:inputText>
 								<p:message for="cantidad" />
 								<p:outputLabel value="Marca: *" />
 								<p:column styleClass="ocultar-bordes">
 									<p:selectOneMenu id="selectMarca"
-										value="#{productoMarca2Bean.producto.marca}" var="temp"
+										value="#{productoBean.producto.marca}" var="temp"
 										converter="#{marcasConverter}" effect="fade" filter="true"
 										panelStyle="width:345px" style="width:325px"
 										filterMatchMode="startsWith" required="true"
-										requiredMessage="Debe seleccionar una marca.">
+										requiredMessage="Debe seleccionar una marca">
 										<f:selectItem itemLabel="Seleccione una marca"
 											itemValue="#{null}" process="@this" />
-										<f:selectItems value="#{marcasTBean.getListaMarca()}"
-											var="marca"
-											itemLabel="#{marca.nombreMarca}"
-											itemValue="#{marca}" />
+
+										<f:selectItems value="#{marcasBean.getlistaMarcas()}"
+											var="marcas"
+											itemLabel="#{marcas.nombreMarca}"
+											itemValue="#{marcas}" />
+
 										<p:column style="width:10%">
+
 											<h:outputText value="#{temp.nombreMarca}" />
 
 										</p:column>
-											</p:selectOneMenu>
+									</p:selectOneMenu>
 								</p:column>
 								<p:message for="selectMarca" />
+
 							</h:panelGrid>
 							<p:commandButton id="btnRegistro" value="Registrar"
-								actionListener="#{productoMarca2Bean.registrar}"
-								update=":form:tablaCliente, :dialogProducto, :form:msgs"
+								actionListener="#{productoBean.registrar}"
+								update=":form:tablaProductos,:dialogProducto,:form:msgs"
 								oncomplete="PF('dialogProducto').show()" process="@form" />
+
 						</h:form>
 					</div>
 				</p:dialog>
-
-
-
-
-
-			</div>
+			</div> 
 		</div>
 		<div class="container">
 			<br />
 			<h:link value="Regresar a index"
 				outcome="/PROYECTO_pages/PROYECTO_secure/primefaces/index"
 				styleClass="btn btn-warning" />
+
 		</div>
 	</ui:define>
 </ui:composition>
