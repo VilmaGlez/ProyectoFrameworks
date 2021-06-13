@@ -21,7 +21,6 @@ public class ClienteBean {
 	public List<Cliente> getClienteList() {
 		if (clienteList == null)
 			setClienteList(clienteService.listarTodosClientes());
-		System.out.println("lista de clientes:" + clienteList.size());
 		return clienteList;
 	}
 
@@ -32,8 +31,7 @@ public class ClienteBean {
 	public void onRowEdit(RowEditEvent event) {
 		Cliente cliente = ((Cliente) event.getObject());
 		System.out.println("datos cliente: " + cliente.getId());
-		clienteService.modificarCliente(cliente.getNombre(), cliente.getApellido(), cliente.getEmail(),
-				cliente.getSexo(),cliente.getIddireccion(), cliente.getId());
+		clienteService.modificarCliente(cliente);
 		FacesMessage msg = new FacesMessage("Cliente editado",
 
 				cliente.getId().toString());
