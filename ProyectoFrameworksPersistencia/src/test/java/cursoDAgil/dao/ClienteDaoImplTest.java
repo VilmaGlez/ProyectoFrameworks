@@ -23,7 +23,8 @@ public class ClienteDaoImplTest {
 	@Inject
 	ClienteDao clienteDao;
 	
-	@Test
+
+	@Ignore
 	public void pruebaConsultarTodo(){
 		int reg;
 		System.out.println("Test consultar todos los clientes");
@@ -82,7 +83,14 @@ public class ClienteDaoImplTest {
 	public void modificar(){
 		System.out.println("\n\nTest modificar");
 		try{
-			clienteDao.modificarCliente("Fernado","Sanchez","Fernando@gmail.com","M",1,4);
+			Cliente cli = new Cliente();
+			cli.setId(10);
+			cli.setNombre("Fernando");
+			cli.setApellido("Martinez");
+			cli.setEmail("f@gmail.com");
+			cli.setSexo("M");
+			cli.setIddireccion(7);
+			clienteDao.modificarCliente(cli);
 			System.out.println(" ");
 		}catch(Exception e){
 			System.out.println("Error:"+ e);

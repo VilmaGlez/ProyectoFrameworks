@@ -23,7 +23,7 @@ public class ProductoDaoImplTest {
 	@Inject
 	ProductoDao productoDao;
 
-	@Test
+	@Ignore
 	public void consultarProductoPorId() {
 		Producto producto = new Producto();
 
@@ -53,7 +53,7 @@ public class ProductoDaoImplTest {
 		}
 	}
 
-	@Ignore
+	@Test
 	public void pruebaConsultarTodoConMarca() {
 		int reg;
 		System.out.println("\n\nTest consultar todos los productos con marca");
