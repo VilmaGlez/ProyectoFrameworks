@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
+<!-- 
+ * Número de equipo: 4
+ * Autores de la clase:
+ *  Garcia Jocelyn Nohemi
+ *  Martinez Quiroz Sayra
+ *  Fecha: 27/05/2021
+  --> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -237,7 +244,8 @@ label="codigo postal" />
 						oncomplete="PF('deleteProductDialog').hide()" />
 					<p:commandButton value="No" type="button"
 						styleClass="ui-button-secondary" icon="pi pi-times"
-						onclick="PF('deleteProductDialog').hide()" />
+						onclick="PF('deleteProductDialog').hide()"
+						oncomplete="PF('dialogCliente').show()" process="@form" />
 				</p:confirmDialog>
 				</h:form>
 
@@ -252,8 +260,8 @@ label="codigo postal" />
 									value="#{direccionTBean.direccion.calle}"
 									styleClass="form-control" required="true"
 									requiredMessage="Campo requerido"
-									validatorMessage="Ingrese entre 8-80 caracteres">
-									<f:validateLength minimum="2" maximum="80" />
+									validatorMessage="Ingrese un texto">
+									<f:validateRegex pattern="((?=.*[a-z]).{3,})" />
 								</p:inputText>
 								<p:message for="calle" />
 								
@@ -263,7 +271,7 @@ label="codigo postal" />
 									styleClass="form-control" required="true"
 									requiredMessage="Campo requerido"
 									validatorMessage="Ingrese entre 8-80 caracteres">
-									<f:validateLength minimum="2" maximum="80" />
+									<f:validateLength minimum="1" maximum="80" />
 								</p:inputText>
 								<p:message for="numero" />
 								
@@ -272,8 +280,8 @@ label="codigo postal" />
 									value="#{direccionTBean.direccion.colonia}"
 									styleClass="form-control" required="true"
 									requiredMessage="Campo requerido"
-									validatorMessage="Ingrese entre 8-80 caracteres">
-									<f:validateLength minimum="2" maximum="80" />
+									validatorMessage="Ingrese un texto">
+									<f:validateRegex pattern="((?=.*[a-z]).{3,})" />
 								</p:inputText>
 								<p:message for="colonia" />
 								
@@ -282,8 +290,8 @@ label="codigo postal" />
 									value="#{direccionTBean.direccion.ciudad}"
 									styleClass="form-control" required="true"
 									requiredMessage="Campo requerido"
-									validatorMessage="Ingrese entre 8-80 caracteres">
-									<f:validateLength minimum="2" maximum="80" />
+									validatorMessage="Ingrese un texto">
+									<f:validateRegex pattern="((?=.*[a-z]).{3,})" />
 								</p:inputText>
 								<p:message for="ciudad" />
 								
@@ -292,8 +300,8 @@ label="codigo postal" />
 									value="#{direccionTBean.direccion.estado}"
 									styleClass="form-control" required="true"
 									requiredMessage="Campo requerido"
-									validatorMessage="Ingrese entre 8-80 caracteres">
-									<f:validateLength minimum="2" maximum="80" />
+									validatorMessage="Ingrese un texto">
+									<f:validateRegex pattern="((?=.*[a-z]).{3,})" />
 								</p:inputText>
 								<p:message for="estado" />
 								
@@ -302,8 +310,8 @@ label="codigo postal" />
 									value="#{direccionTBean.direccion.pais}"
 									styleClass="form-control" required="true"
 									requiredMessage="Campo requerido"
-									validatorMessage="Ingrese entre 8-80 caracteres">
-									<f:validateLength minimum="2" maximum="80" />
+									validatorMessage="Ingrese un texto">
+									<f:validateRegex pattern="((?=.*[a-z]).{3,})" />
 								</p:inputText>
 								<p:message for="pais" />
 								
