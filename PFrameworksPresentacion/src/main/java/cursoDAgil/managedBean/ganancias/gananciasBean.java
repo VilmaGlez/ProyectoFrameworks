@@ -1,3 +1,11 @@
+/*
+ * Número de equipo: 4
+ * Autores de la clase:
+ *  Garcia Jocelyn Nohemi
+ *  Martinez Quiroz Sayra
+ *  Fecha: 27/05/2021
+ * 
+ */
 package cursoDAgil.managedBean.ganancias;
 
 import java.util.ArrayList;
