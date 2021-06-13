@@ -31,8 +31,8 @@ public class ClienteServiceImpl implements ClienteService, Serializable {
 		return clienteDao.eliminarCliente(mapCliente);
 	}
 	@Override
-	public Integer modificarCliente(String nombre, String apellido, String email, String sexo, int id) {
-		return clienteDao.modificarCliente(nombre, apellido, email, sexo, id);
+	public Integer modificarCliente(Cliente cliente) {
+		return clienteDao.modificarCliente(cliente);
 	}
 
 }

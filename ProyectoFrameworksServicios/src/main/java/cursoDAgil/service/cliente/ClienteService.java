@@ -8,5 +8,5 @@ public interface ClienteService {
 	Integer nuevoCliente(Cliente cliente);
 	Cliente obtenerClientePorId(Integer id);
 	Integer eliminarCliente(Map<String, Integer>mapCliente);
-	Integer modificarCliente(String nombre, String apellido, String email, String sexo, int id);
+	Integer modificarCliente(Cliente cliente);
 }
